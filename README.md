@@ -1,9 +1,10 @@
 # 0x1B. C - Sorting algorithms & Big O
 ```C, Algorithm, Data structure ```
+
 designed by: Alexandre Gautier
 
 project done by team <b> (Leworkalush Getahun, Mengistu Messele) <b>
-
+[!][willy-wonka.png]
 # Background Context
 This project is meant to be done by groups of two students. Each group of two should pair program for at least the mandatory part.
 
