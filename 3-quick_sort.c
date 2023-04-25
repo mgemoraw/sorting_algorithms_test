@@ -36,14 +36,16 @@ int lomuto_partition(int arr[], size_t size, int low, int high)
 		{
 			i++;
 			_swap(&arr[i], &arr[j]);
+			print_array(arr, size);
 			swaps++;
 		}
 	}
-	_swap(&arr[i + 1], &arr[high]);
-	print_array(arr, size);
-
-	swaps++;
-
+	if (arr[i + 1] > pivot)
+	{
+		_swap(&arr[i + 1], &arr[high]);
+		print_array(arr, size);
+		swaps++;
+	}
 	return (i + 1);
 }
 
@@ -76,6 +78,9 @@ void lomuto_sort(int arr[], size_t size, int low, int high)
 void quick_sort(int *array, size_t size)
 {
 	size_t low = 0, high = size - 1;
+
+	if (array == NULL || size < 2)
+		return;
 
 	lomuto_sort(array, size, low, high);
 }
