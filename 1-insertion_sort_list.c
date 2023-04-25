@@ -7,63 +7,37 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *temp, *current, *sorted, *unsorted;
-	size_t size, i = 0;
+	listint_t *iter, *insert, *temp;
 
-	if (*list == NULL)
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
-
-	size = get_size(*list);
-
-	current = *list;
-	sorted = malloc(sizeof(listint_t));
-	unsorted = malloc(sizeof(listint_t));
- 
-	while (i < size)
+	for (iter = (*list)->next; iter != NULL; iter = temp)
 	{
-		sorted = current->next->prev;
-		unsorted = current->next;
-		while (unsorted->next)
+		temp = (iter->next);
+		insert = iter->prev;
+		while (insert != NULL && iter->n < insert->n)
 		{
-			temp = unsorted;
-			if (current->n > temp->n)
-			{
-				swap_nodes(&sorted, &unsorted);
-				print_list(*list); 
-			}
-			unsorted = unsorted->next;
+			swap_nodess(list, &insert, iter);
+
+			print_list(*list);
 		}
-		current = current->next;
-		i++;
+
 	}
 
 }
-
-void swap_nodes(listint_t **node1, listint_t **node2)
-{
-	listint_t *temp1, *temp2;
-
-	if (*node1 == NULL || *node2 == NULL)
-		return;
-
-	temp1 = (*node1)->prev;
-	temp2 = (*node2)->next;
-
-	(*node2)->prev = temp1;
-	(*node1)->next = temp2;
-
-	(*node1)->prev = (*node2);
-	(*node2)->next = (*node1);
-}
-
-
+/**
+ * get_size - Get the size object
+ *
+ * @list: head of the list
+ * Return: returns size of list
+ */
 size_t get_size(listint_t *list)
 {
 	size_t size = 0;
 
 	if (list == NULL)
 		return (size);
-	
+
 	while (list != NULL)
 	{
 		size++;
@@ -71,4 +45,26 @@ size_t get_size(listint_t *list)
 	}
 
 	return (size);
+}
+
+
+/**
+ * swap_nodess - Swap two nodes in a listint_t doubly-linked list.
+ * @head: A pointer to the head of the doubly-linked list.
+ * @node1: A pointer to the first node to swap.
+ * @node2: The second node to swap.
+ */
+void swap_nodess(listint_t **head, listint_t **node1, listint_t *node2)
+{
+	(*node1)->next = node2->next;
+	if (node2->next != NULL)
+		node2->next->prev = *node1;
+	node2->prev = (*node1)->prev;
+	node2->next = *node1;
+	if ((*node1)->prev != NULL)
+		(*node1)->prev->next = node2;
+	else
+		*head = node2;
+	(*node1)->prev = node2;
+	*node1 = node2->prev;
 }
